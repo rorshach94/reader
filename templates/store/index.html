@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Store - Low Prices in Books & more{% endblock %}
+
+{% block content %}
+ <section class="bg-image p-5 text-center mb-5 text-white"
+  style="background-image: url('https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp');" class="py-5 text-center container">
+    <div class="row py-lg-3">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-dark">Search, Read, Buy, Review</h1>
+        <p class="lead text-body-secondary">Rediscover the classics with The Classic Reader</p>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="album py-5">
+        <div class="pb-10">
+          <h1 class="h3">Popular</h1>
+        </div>
+        
+        {% if not products %}
+        <div class="col-12">There are currently no products active</div>
+        {% else %}
+        <div class="row row-cols-sm-5 row-cols-md-5 g-3">
+          {% for product in products %}
+          <div class="col-md-2.5">
+            <div class="card border-0">
+              {% for image in product.product_image.all %}
+              {% if image.is_feature%}
+              <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}"
+                alt="{{ image.image.alt_text }}">
+              {% endif %}
+              {% endfor %}
+              <div class="card-body px-0" style="background-image: url('https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp');" class="py-5 text-center container">
+                <p class="card-text">
+                  <a class="text-white text-decoration-none"
+                    href="{{ product.get_absolute_url }}">{{ product.title|slice:":50" }}...</a>
+                </p>
+                <div class="fw-bold">₹{{product.regular_price}}</div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+
+  {% endblock %}
